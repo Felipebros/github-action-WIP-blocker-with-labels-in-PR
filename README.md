@@ -1,1 +1,1 @@
-# bloqueador WIP de ação do github com labels no PR
+# github action WIP blocker with labels in PR
