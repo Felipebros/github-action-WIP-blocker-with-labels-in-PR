@@ -28,7 +28,7 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 echo "Teste"
 
 check_contains_wip_label() {
-  return 1
+  return 0
 }
 
 check_contains_wip_label
