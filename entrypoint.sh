@@ -35,8 +35,8 @@ number=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
 check_contains_wip_label() {
   RESPONSE=$(
     curl -s \
-      -X POST
-    -H "${AUTH_HEADER}" \
+      -X POST \
+      -H "${AUTH_HEADER}" \
       -H "${API_HEADER}" \
       "${URI}/repos/${GITHUB_REPOSITORY}/pulls/${number}"
   )
