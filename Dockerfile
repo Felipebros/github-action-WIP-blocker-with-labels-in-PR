@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:latest
 
 LABEL "com.github.actions.name"="WIP blocker with labels in PR"
 LABEL "com.github.actions.description"="Github action WIP blocker with labels in Pull requests"
