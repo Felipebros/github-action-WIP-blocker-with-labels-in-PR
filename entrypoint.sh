@@ -50,4 +50,8 @@ check_contains_wip_label() {
   fi
 }
 
-check_contains_wip_label
+process() {
+  check_contains_wip_label
+}
+
+process
