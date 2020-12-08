@@ -32,8 +32,7 @@ ref=$(jq -r ".pull_request.head.ref" "$GITHUB_EVENT_PATH")
 number=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
 action=$(jq -r ".action" "$GITHUB_EVENT_PATH")
 state=$(jq -r ".review.state" "$GITHUB_EVENT_PATH")
-echo "${GITHUB_EVENT_PATH} GITHUB_EVENT_PATH"
-
+cat $GITHUB_EVENT_PATH
 
 check_contains_wip_label() {
   RESPONSE=$(
@@ -67,7 +66,7 @@ run_ci_when_approved() {
 
   resultado=$(
     curl \
-      -X POST \
+      -X POST -s\
       -H "${AUTH_HEADER}" \
       -H "${API_HEADER}" \
       "${URI}/repos/${GITHUB_REPOSITORY}/actions/workflows/wip.yml/dispatches" \
