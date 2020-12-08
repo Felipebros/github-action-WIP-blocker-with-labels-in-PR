@@ -31,8 +31,8 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 ref=$(jq -r ".pull_request.head.ref" "$GITHUB_EVENT_PATH")
 number=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
 action=$(jq -r ".action" "$GITHUB_EVENT_PATH")
-state=$(jq -r ".[] | .review.state" "$GITHUB_EVENT_PATH")
-echo "${state} state"
+state=$(jq -r ".review.state" "$GITHUB_EVENT_PATH")
+echo "${GITHUB_EVENT_PATH} GITHUB_EVENT_PATH"
 
 
 check_contains_wip_label() {
