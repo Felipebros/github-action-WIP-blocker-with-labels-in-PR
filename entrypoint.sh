@@ -28,6 +28,7 @@ URI="https://api.github.com"
 API_HEADER="Accept: application/vnd.github.v3+json"
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
+ref=$(jq -r ".pull_request.head.ref" "$GITHUB_EVENT_PATH")
 number=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
 action=$(jq -r ".action" "$GITHUB_EVENT_PATH")
 state=$(jq -r ".review.state" "$GITHUB_EVENT_PATH")
@@ -60,6 +61,7 @@ run_ci_when_approved() {
   echo "${approvals}/${APPROVALS} approvals"
   echo "${reviews} reviews"
   echo "${GITHUB_REF#refs/heads/} branch"
+  echo "${ref} ref"
 
   resultado=$(
     curl \
@@ -67,7 +69,7 @@ run_ci_when_approved() {
       -H "${AUTH_HEADER}" \
       -H "${API_HEADER}" \
       "${URI}/repos/${GITHUB_REPOSITORY}/actions/workflows/dockerimage.yml/dispatches" \
-      -d '{"ref":"refs/pull/'${number}'/head"}'
+      -d '{"ref":"refs/pull/'${ref}'/head"}'
   )
   echo "resultado: ${resultado}"
 
