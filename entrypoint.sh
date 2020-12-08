@@ -87,12 +87,12 @@ run_ci_when_approved() {
 
 process() {
   run_ci_when_approved
-  check_contains_wip_label
-  if [[ "$action" == "submitted" ]] && [[ "$state" == "approved" ]]; then
-    run_ci_when_approved
-  else
-    echo "Ignoring event ${action}/${state}"
-  fi
+  # check_contains_wip_label
+  # if [[ "$action" == "submitted" ]] && [[ "$state" == "approved" ]]; then
+  #   run_ci_when_approved
+  # else
+  #   echo "Ignoring event ${action}/${state}"
+  # fi
 }
 
 process
