@@ -59,6 +59,7 @@ run_ci_when_approved() {
 
   echo "${approvals}/${APPROVALS} approvals"
   echo "${reviews} reviews"
+  echo "${GITHUB_REF#refs/heads/} branch"
 
   resultado=$(
     curl -s\
