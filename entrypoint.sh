@@ -67,6 +67,14 @@ run_ci_when_approved() {
 
     echo "${approvals}/${APPROVALS} approvals"
 
+
+    # curl \
+    #   -X POST \
+    #   -H "Accept: application/vnd.github.v3+json" \
+    #   https://api.github.com/repos/octocat/hello-world/actions/workflows/42/dispatches \
+    #   -d '{"ref":"ref"}'
+
+
     if [[ "$approvals" -ge "$APPROVALS" ]]; then
       echo "Labeling pull request"
 
@@ -78,6 +86,7 @@ run_ci_when_approved() {
 }
 
 process() {
+  run_ci_when_approved
   check_contains_wip_label
   if [[ "$action" == "submitted" ]] && [[ "$state" == "approved" ]]; then
     run_ci_when_approved
