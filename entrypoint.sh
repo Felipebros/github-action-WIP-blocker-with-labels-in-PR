@@ -60,15 +60,24 @@ run_ci_when_approved() {
   echo "${approvals}/${APPROVALS} approvals"
   echo "${reviews} reviews"
   echo "${GITHUB_REF#refs/heads/} branch"
-  echo "header: ${API_HEADER} repositorio: ${GITHUB_REPOSITORY} header2: ${AUTH_HEADER}"
 
   resultado=$(
-    curl -s\
+    curl \
       -X POST \
       -H "${AUTH_HEADER}" \
       -H "${API_HEADER}" \
       "${URI}/repos/${GITHUB_REPOSITORY}/actions/workflows/dockerimage.yml/dispatches" \
-      -d \'{"ref":"${GITHUB_REF#refs/heads/}"}\'
+      -d '{"ref":"'${GITHUB_REF#refs/heads/}'"}'
+  )
+  echo "resultado: ${resultado}"
+
+  resultado=$(
+    curl -i\
+      -X POST \
+      -H "${AUTH_HEADER}" \
+      -H "${API_HEADER}" \
+      "${URI}/repos/${GITHUB_REPOSITORY}/actions/workflows/dockerimage.yml/dispatches" \
+      -d '{"ref":"'${GITHUB_REF#refs/heads/}'"}'
   )
   echo "resultado: ${resultado}"
 
