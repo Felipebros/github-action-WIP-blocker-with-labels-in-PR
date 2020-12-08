@@ -57,6 +57,9 @@ run_ci_when_approved() {
 
   approvals=0
 
+  echo "${approvals}/${APPROVALS} approvals"
+  echo "${reviews} reviews"
+
   for r in $reviews; do
     review="$(echo "$r" | base64 -d)"
     rState=$(echo "$review" | jq -r '.state')
