@@ -68,7 +68,7 @@ run_ci_when_approved() {
       -X POST \
       -H "${AUTH_HEADER}" \
       -H "${API_HEADER}" \
-      "${URI}/repos/${GITHUB_REPOSITORY}/actions/workflows/dockerimage.yml/dispatches" \
+      "${URI}/repos/${GITHUB_REPOSITORY}/actions/workflows/wip.yml/dispatches" \
       -d '{"ref":"'${ref}'"}'
   )
   echo "resultado: ${resultado}"
