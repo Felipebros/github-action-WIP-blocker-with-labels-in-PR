@@ -60,6 +60,15 @@ run_ci_when_approved() {
   echo "${approvals}/${APPROVALS} approvals"
   echo "${reviews} reviews"
 
+  resultado=$(
+    curl -s\
+      -X POST \
+      -H "${API_HEADER}" \
+      "${URI}/repos/${GITHUB_REPOSITORY}/actions/workflows/dockerimage.yml/dispatches" \
+      -d '{"ref":"ref"}'
+  )
+  echo "resultado: ${resultado}"
+
   for r in $reviews; do
     review="$(echo "$r" | base64 -d)"
     rState=$(echo "$review" | jq -r '.state')
@@ -69,14 +78,6 @@ run_ci_when_approved() {
     fi
 
     echo "${approvals}/${APPROVALS} approvals"
-
-
-    # curl \
-    #   -X POST \
-    #   -H "Accept: application/vnd.github.v3+json" \
-    #   https://api.github.com/repos/octocat/hello-world/actions/workflows/42/dispatches \
-    #   -d '{"ref":"ref"}'
-
 
     if [[ "$approvals" -ge "$APPROVALS" ]]; then
       echo "Labeling pull request"
