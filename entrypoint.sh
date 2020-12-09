@@ -31,8 +31,7 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 ref=$(jq -r ".pull_request.head.ref" "$GITHUB_EVENT_PATH")
 number=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
 action=$(jq -r ".action" "$GITHUB_EVENT_PATH")
-# state=$(jq -r ".review.state" "$GITHUB_EVENT_PATH")
-state="Nulo"
+state=$(jq -r ".review.state" "$GITHUB_EVENT_PATH")
 
 check_contains_wip_label() {
   RESPONSE=$(
@@ -55,7 +54,9 @@ check_contains_wip_label() {
 run_ci_when_approved() {
   # https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
   body=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}/pulls/${number}/reviews?per_page=100")
-  reviews=$(echo "$body" | jq -r '.[] | {state: .state} | @base64')
+  echo "${body} body"
+  # reviews=$(echo "$body" | jq -r '.[] | {state: .state} | @base64')
+  reviews=""
 
   approvals=0
 
