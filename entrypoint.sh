@@ -54,9 +54,8 @@ check_contains_wip_label() {
 run_ci_when_approved() {
   # https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
   body=$(curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}/pulls/${number}/reviews?per_page=100")
-  echo "${body} body"
-  # reviews=$(echo "$body" | jq -r '.[] | {state: .state} | @base64')
-  reviews=""
+  echo "${body} body jq"
+  reviews=$(echo "$body" | jq -r '.[] | {state: .state} | @base64')
 
   approvals=0
 
@@ -96,13 +95,13 @@ run_ci_when_approved() {
 }
 
 process() {
-  run_ci_when_approved
+  # run_ci_when_approved
   check_contains_wip_label
-  if [[ "$action" == "submitted" ]] && [[ "$state" == "approved" ]]; then
-    run_ci_when_approved
-  else
-    echo "Ignoring event ${action}/${state}"
-  fi
+  # if [[ "$action" == "submitted" ]] && [[ "$state" == "approved" ]]; then
+  #   run_ci_when_approved
+  # else
+  #   echo "Ignoring event ${action}/${state}"
+  # fi
 }
 
 process
